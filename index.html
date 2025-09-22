@@ -151,6 +151,9 @@
     padding: 5px 10px;
     font-size: 12px;
     border-radius: 8px;
+    color: white;
+    border: none;
+    cursor: pointer;
     transition: all 0.3s ease;
   }
   .basket-item button:hover { background: #b71c1c; }
@@ -231,18 +234,24 @@ let basket = [];
 
 function displayProducts(productsArray){
   const container = document.getElementById('productsContainer');
-  container.innerHTML = '';
-  productsArray.forEach(p=>{
-    container.innerHTML += `
-    <div class="product">
-      <img src="${p.img}" alt="${p.name}">
-      <h2>${p.name}</h2>
-      <p>${p.desc}</p>
-      <b>Price: ₹${p.price}</b><br>
-      <button onclick="addToBasket(${p.id})">Add to Basket</button>
-      <a href="upi://pay?pa=7601017851@ybl&pn=HandloomStore&am=${p.price}&cu=INR" class="btn">Pay ₹${p.price}</a>
-    </div>`;
-  });
+  let html = '';
+  if(productsArray.length === 0){
+    html = "<p style='grid-column:1/-1;text-align:center;color:#777;'>No products found.</p>";
+  } else {
+    productsArray.forEach(p=>{
+      html += `
+        <div class="product">
+          <img src="${p.img}" alt="${p.name}">
+          <h2>${p.name}</h2>
+          <p>${p.desc}</p>
+          <b>Price: ₹${p.price}</b><br>
+          <button onclick="addToBasket(${p.id})">Add to Basket</button>
+          <a href="upi://pay?pa=7601017851@ybl&pn=HandloomStore&am=${p.price}&cu=INR" class="btn">Pay ₹${p.price}</a>
+        </div>
+      `;
+    });
+  }
+  container.innerHTML = html;
 }
 
 function addToBasket(id){
@@ -270,7 +279,7 @@ function updateBasket(){
       </div>
     `;
   });
-  totalDiv.innerHTML = <b>Total: ₹${total}</b>;
+  totalDiv.innerHTML = `<b>Total: ₹${total}</b>`;
 }
 
 function toggleBasket(){
