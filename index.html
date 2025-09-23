@@ -1,300 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Handloom Fashion Shop</title>
-<style>
-  /* Body & Header */
-  body {
-    font-family: 'Arial', sans-serif;
-    background: #f9f9f9;
-    margin: 0;
-    padding: 0;
-  }
-  header {
-    background: linear-gradient(-45deg,#ff8a65,#d32f2f,#ff7043,#ff5722);
-    background-size: 400% 400%;
-    color: white;
-    padding: 25px;
-    text-align: center;
-    animation: gradientBG 15s ease infinite;
-  }
-  @keyframes gradientBG {
-    0% {background-position:0% 50%;}
-    50% {background-position:100% 50%;}
-    100% {background-position:0% 50%;}
-  }
-  h1 { margin: 0; text-shadow: 1px 1px 3px #00000050; }
-
-  /* Search Bar */
-  .search-bar {
-    margin: 20px auto;
-    max-width: 600px;
-    display: flex;
-    gap: 10px;
-  }
-  .search-bar input {
-    flex: 1;
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    transition: all 0.3s ease;
-  }
-  .search-bar input:focus {
-    box-shadow: 0 0 10px #d32f2f70;
-    border-color: #d32f2f;
-    outline: none;
-  }
-  .search-bar button {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(45deg,#d32f2f,#ff7043);
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s ease;
-  }
-  .search-bar button:hover {
-    transform: scale(1.05);
-    background: linear-gradient(45deg,#ff5722,#d32f2f);
-  }
-
-  /* Products Grid */
-  .products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-    gap: 25px;
-    padding: 20px;
-  }
-  .product {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .product:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-  }
-  .product img {
-    max-width: 100%;
-    border-radius: 12px;
-    transition: transform 0.3s ease;
-  }
-  .product img:hover {
-    transform: scale(1.05);
-  }
-  .product h2 {
-    color: #d32f2f;
-    font-size: 20px;
-    margin: 12px 0 6px 0;
-    transition: color 0.3s ease;
-  }
-  .product:hover h2 { color: #ff5722; }
-  .product p {
-    font-size: 14px;
-    color: #555;
-    min-height: 40px;
-  }
-  .product b { color: #333; font-size: 16px; }
-  .product button, .product a.btn {
-    margin-top: 10px;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(45deg,#ff7043,#d32f2f);
-    color: white;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    transition: all 0.3s ease;
-  }
-  .product button:hover, .product a.btn:hover {
-    transform: scale(1.05);
-    background: linear-gradient(45deg,#ff5722,#ff7043);
-  }
-
-  /* Basket Sidebar */
-  .basket {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 300px;
-    height: 100%;
-    background: white;
-    box-shadow: -5px 0 15px rgba(0,0,0,0.25);
-    transform: translateX(100%);
-    transition: transform 0.4s ease;
-    padding: 25px;
-    overflow-y: auto;
-    z-index: 100;
-  }
-  .basket.active { transform: translateX(0); }
-  .basket h2 { color: #d32f2f; margin-top:0; text-align:center; }
-  .basket-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 8px;
-    transition: all 0.3s ease;
-  }
-  .basket-item:hover { background: #f9f9f9; }
-  .basket-item button {
-    background: #d32f2f;
-    padding: 5px 10px;
-    font-size: 12px;
-    border-radius: 8px;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  .basket-item button:hover { background: #b71c1c; }
-
-  .basket-btn {
-    position: fixed;
-    right: 25px;
-    bottom: 25px;
-    background: linear-gradient(45deg,#d32f2f,#ff7043);
-    color: white;
-    padding: 15px 20px;
-    border-radius: 50px;
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: all 0.3s ease;
-    z-index: 200;
-  }
-  .basket-btn:hover { transform: scale(1.1); }
-
-  /* Delivery Section */
-  h2.delivery { text-align: center; margin-top:50px; color:#4a148c; text-shadow: 1px 1px 2px #aaa;}
-  a.delivery-btn button {
-    padding:12px 20px;
-    background: linear-gradient(45deg,#4a148c,#7b1fa2);
-    color:white;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    transition: all 0.3s ease;
-  }
-  a.delivery-btn button:hover {
-    transform: scale(1.05);
-    background: linear-gradient(45deg,#7b1fa2,#4a148c);
-  }
-
-</style>
+  <meta charset="UTF-8">
+  <title>Handloom Fashion Shop</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body { font-family: 'Arial', sans-serif; background: #f9f9f9; margin: 0; padding: 0;}
+    nav {
+      position: sticky; top: 0; left: 0; right: 0; background: linear-gradient(-45deg,#ff8a65,#d32f2f,#ff7043,#ff5722);
+      background-size: 400% 400%; animation: gradientBG 15s ease infinite; display: flex; gap: 18px; padding: 18px 30px; font-size: 18px; z-index: 110;
+    }
+    nav a { color: white; text-decoration: none; font-weight: bold; padding: 7px 20px; border-radius: 14px; transition: background 0.3s;}
+    nav a.active, nav a:hover { background:rgba(255,255,255,0.15);}
+    @keyframes gradientBG { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
+    header {background: none; color: #d32f2f; padding:32px 0 10px;text-align:center;}
+    h1 {margin:0;text-shadow:1px 1px 3px #00000030;}
+    section { display: none; padding-bottom:40px;}
+    section.active { display: block;}
+    .search-bar { margin: 20px auto; max-width: 600px; display: flex; gap: 10px;}
+    .search-bar input {flex:1; padding:12px; border-radius:12px; border:1px solid #ccc; font-size:16px;}
+    .search-bar input:focus { box-shadow: 0 0 10px #d32f2f70; border-color: #d32f2f; outline:none;}
+    .search-bar button {padding:12px 20px; border:none; border-radius:12px; background:linear-gradient(45deg,#d32f2f,#ff7043); color:white; cursor:pointer; font-size:16px;}
+    .search-bar button:hover { background:linear-gradient(45deg,#ff5722,#d32f2f);}
+    .products {display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px;padding:20px;}
+    .product {background:white; border-radius:15px; box-shadow:0 6px 15px rgba(0,0,0,0.1); padding:20px;text-align:center; transition:transform 0.3s, box-shadow 0.3s;}
+    .product:hover {transform: translateY(-8px) scale(1.02);box-shadow:0 12px 25px rgba(0,0,0,0.2);}
+    .product img {max-width:100%;border-radius:12px;}
+    .product h2 {color:#d32f2f;font-size:20px;margin:12px 0 6px 0;}
+    .product:hover h2 {color:#ff5722;}
+    .product p {font-size:14px;color:#555;min-height:40px;}
+    .product b {color:#333;font-size:16px;}
+    .product button, .btn {margin-top:10px; padding:10px 15px; border:none; border-radius:12px; background:linear-gradient(45deg,#ff7043,#d32f2f); color:white; cursor:pointer; text-decoration:none; font-size:14px; transition:all 0.3s;}
+    .product button:hover, .btn:hover {background:linear-gradient(45deg,#ff5722,#ff7043);}
+    .basket {position:fixed; top:0; right:0; width:300px;height:100%;background:white; box-shadow:-5px 0 15px rgba(0,0,0,0.25);transform:translateX(100%);transition:transform 0.4s; padding:25px;overflow-y:auto;z-index:100;}
+    .basket.active {transform:translateX(0);}
+    .basket h2 {color:#d32f2f; margin-top:0; text-align:center;}
+    .basket-item {display: flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #eee; padding-bottom:8px;}
+    .basket-item button {background:#d32f2f; padding:5px 10px; font-size:12px; border-radius:8px; color:white; border:none; cursor:pointer;}
+    .basket-item button:hover {background:#b71c1c;}
+    .basket-btn {position:fixed; right:25px; bottom:25px; background:linear-gradient(45deg,#d32f2f,#ff7043); color:white; padding:15px 20px; border-radius:50px; font-size:18px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3); transition:all 0.3s; z-index:200;}
+    .basket-btn:hover {transform:scale(1.1);}
+    input, textarea {font-size:15px;padding:9px 12px;border-radius:8px;border:1px solid #ccc;}
+    .feedback-form button {background:linear-gradient(45deg,#4a148c,#7b1fa2); color:white; margin-top:12px; border:none; padding:10px 18px; border-radius:11px; cursor:pointer;}
+    .feedback-form button:hover {background:linear-gradient(45deg,#7b1fa2,#4a148c);}
+    .info-box {margin-top:2em;text-align:center;}
+    .artisan-card img {margin:auto;display:block;}
+    .artisan-card h3 {margin-bottom:10px;}
+    .faq-btn {font-size:17px;padding:10px 22px;border-radius:12px;border:none;background:#efefef;color:#d32f2f;cursor:pointer; margin-bottom:6px; display:block;width:100%;text-align:left;}
+    .faq-ans {display:none;padding:13px 0;}
+  </style>
 </head>
 <body>
+  <nav>
+    <a href="#" class="active" onclick="showPage('home')">🏠 Home</a>
+    <a href="#" onclick="showPage('traditional')">🧵 Go Traditional</a>
+    <a href="#" onclick="showPage('contact')">💬 Contact</a>
+    <a href="#" onclick="showPage('about')">👥 About Us</a>
+    <a href="#" onclick="showPage('faq')">❔ FAQ</a>
+  </nav>
 
-<header>
-  <h1>Handloom Fashion Shop</h1>
-</header>
+  <header>
+    <h1 id="mainTitle">Handloom Fashion Shop</h1>
+  </header>
 
-<div class="search-bar">
-  <input type="text" id="searchInput" placeholder="Search products...">
-  <button onclick="searchProduct()">Search</button>
-</div>
+  <!-- HOME/SHOP PAGE -->
+  <section id="home" class="active">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search products...">
+      <button onclick="searchProduct()">Search</button>
+    </div>
+    <div class="products" id="productsContainer"></div>
+    <div class="basket" id="basketSidebar">
+      <h2>Your Basket</h2>
+      <div id="basketItems"></div>
+      <p id="basketTotal"><b>Total: ₹0</b></p>
+    </div>
+    <button class="basket-btn" onclick="toggleBasket()">🛒 Basket</button>
+  </section>
 
-<div class="products" id="productsContainer">
-  <!-- Products inserted via JS -->
-</div>
+  <!-- TRADITIONAL PAGE -->
+  <section id="traditional">
+    <h2 style="text-align:center;">Traditional Gallery</h2>
+    <div class="products">
+      <div class="product"><img src="https://via.placeholder.com/250x200?text=Artisan" alt="Artisan"><h2>Artisan at Work</h2><p>Craftsmanship passed through generations.</p></div>
+      <div class="product"><img src="https://via.placeholder.com/250x200?text=Festive+Wear" alt="Festive"><h2>Festive Look</h2><p>The essence of celebration in handloom fashion.</p></div>
+      <div class="product"><img src="https://via.placeholder.com/250x200?text=Cultural+Scene" alt="Cultural"><h2>Cultural Vibes</h2><p>Traditional gathering and style inspiration.</p></div>
+    </div>
+    <h2 style="text-align:center;">Traditional Styling Tips</h2>
+    <ul style="max-width:500px;margin:auto;">
+      <li>Blend a handloom saree with modern accessories.</li>
+      <li>Try bold colors for a festive look.</li>
+      <li>Mix handloom dupattas with Western wear.</li>
+    </ul>
+    <div class="artisan-card" style="background:#fff4e6;max-width:400px;margin:35px auto 0;padding:20px;border-radius:16px;box-shadow:0 4px 12px #d32f2f15;">
+      <h3 style="color:#d32f2f;">Featured Artisan</h3>
+      <img src="https://via.placeholder.com/80x80?text=Photo" alt="Artisan" style="border-radius:50%;margin-top:10px;">
+      <p style="color:#555;">Meet Lakshmi, a master weaver from Andhra Pradesh, blending tradition with creativity.</p>
+    </div>
+  </section>
 
-<div class="basket" id="basketSidebar">
-  <h2>Basket</h2>
-  <div id="basketItems"></div>
-  <p id="basketTotal"><b>Total: ₹0</b></p>
-</div>
-
-<button class="basket-btn" onclick="toggleBasket()">🛒 Basket</button>
-
-<h2 class="delivery">Enter Delivery Details</h2>
-<a class="delivery-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSekQBMtOrICHIUs3eLpFVL-ZYLhqxcGPJYQaXyrBYTESVQYyA/viewform?usp=header" target="_blank">
-  <button>Fill Delivery Details</button>
-</a>
-
-<script>
-const products = [
-  {id:1,name:"Handloom Saree",desc:"Beautiful handmade saree with natural colors.",price:2500,img:"https://via.placeholder.com/250x200?text=Saree"},
-  {id:2,name:"Handloom Kurta",desc:"Traditional kurta made with handloom cotton.",price:1500,img:"https://via.placeholder.com/250x200?text=Kurta"},
-  {id:3,name:"Handloom Handbag",desc:"Eco-friendly handbag crafted with handloom fabric.",price:800,img:"https://via.placeholder.com/250x200?text=Handbag"},
-  {id:4,name:"Handloom Dupatta",desc:"Elegant dupatta in handloom cotton.",price:600,img:"https://via.placeholder.com/250x200?text=Dupatta"},
-  {id:5,name:"Handloom Tablecloth",desc:"Beautiful handloom tablecloth for home decor.",price:1200,img:"https://via.placeholder.com/250x200?text=Tablecloth"},
-  {id:6,name:"Handloom Cushion Cover",desc:"Soft and colorful handloom cushion cover.",price:500,img:"https://via.placeholder.com/250x200?text=Cushion"}
-];
-
-let basket = [];
-
-function displayProducts(productsArray){
-  const container = document.getElementById('productsContainer');
-  let html = '';
-  if(productsArray.length === 0){
-    html = "<p style='grid-column:1/-1;text-align:center;color:#777;'>No products found.</p>";
-  } else {
-    productsArray.forEach(p=>{
-      html += `
-        <div class="product">
-          <img src="${p.img}" alt="${p.name}">
-          <h2>${p.name}</h2>
-          <p>${p.desc}</p>
-          <b>Price: ₹${p.price}</b><br>
-          <button onclick="addToBasket(${p.id})">Add to Basket</button>
-          <a href="upi://pay?pa=7601017851@ybl&pn=HandloomStore&am=${p.price}&cu=INR" class="btn">Pay ₹${p.price}</a>
+  <!-- CONTACT PAGE -->
+  <section id="contact">
+    <section class="contact-section" style="max-width:430px;margin:auto;">
+      <form class="feedback-form" style="display:flex;flex-direction:column;gap:14px;" onsubmit="contactSubmit(event)">
+        <h2>Send Us a Message</h2>
+        <label for="name">Your Name</label>
+        <input type="text" id="name" required placeholder="Enter your name">
+        <label for="email">Your Email</label>
+        <input type="email" id="email" required placeholder="Enter your email">
+        <label for="msg">Your Message</label>
+        <textarea id="msg" rows="4" required placeholder="Type your message"></textarea>
+        <button type="submit">Send</button>
+        <div style="margin-top:16px;">
+          <strong>For complaints, write to:</strong> <br>
+          <a href="mailto:gurralasaisanjay@gmail.com">gurralasaisanjay@gmail.com</a>
         </div>
-      `;
-    });
-  }
-  container.innerHTML = html;
-}
-
-function addToBasket(id){
-  const product = products.find(p=>p.id===id);
-  basket.push(product);
-  updateBasket();
-}
-
-function removeFromBasket(index){
-  basket.splice(index,1);
-  updateBasket();
-}
-
-function updateBasket(){
-  const basketDiv = document.getElementById('basketItems');
-  const totalDiv = document.getElementById('basketTotal');
-  basketDiv.innerHTML = '';
-  let total = 0;
-  basket.forEach((item,index)=>{
-    total += item.price;
-    basketDiv.innerHTML += `
-      <div class="basket-item">
-        <span>${item.name} - ₹${item.price}</span>
-        <button onclick="removeFromBasket(${index})">Remove</button>
+      </form>
+      <div class="info-box" style="background:#ececff;padding:18px;border-radius:10px;margin:30px 0;">
+        <h3>Why Feedback Matters?</h3>
+        <p>We strive to bring the best handloom experiences to you—your suggestions help us improve!</p>
       </div>
-    `;
-  });
-  totalDiv.innerHTML = `<b>Total: ₹${total}</b>`;
-}
+    </section>
+  </section>
 
-function toggleBasket(){
-  document.getElementById('basketSidebar').classList.toggle('active');
-}
+  <!-- ABOUT US PAGE -->
+  <section id="about">
+    <section style="max-width:600px;margin:auto;padding:35px 0;">
+      <h2>Our Story</h2>
+      <p>Founded in 2025, Handloom Fashion Shop is dedicated to promoting traditional Indian handloom artistry while blending it with modern trends. Every product is a story—crafted with love by skilled artisans.</p>
+      <h2>Our Mission</h2>
+      <ul>
+        <li>Empower artisans across India</li>
+        <li>Deliver beautiful, eco-friendly fashion</li>
+        <li>Preserve cultural heritage in every thread</li>
+      </ul>
+      <div style="margin-top:28px;">
+        <span style="font-size:32px;">🌿</span>
+        <span style="font-size:32px;">🎨</span>
+        <span style="font-size:32px;">🧵</span>
+      </div>
+    </section>
+  </section>
 
-function searchProduct(){
-  const keyword = document.getElementById('searchInput').value.toLowerCase();
-  const filtered = products.filter(p=>p.name.toLowerCase().includes(keyword));
-  displayProducts(filtered);
-}
+  <!-- FAQ PAGE -->
+  <section id="faq">
+    <section style="max-width:600px;margin:auto;">
+      <h1 style="text-align:center;margin-bottom:30px;">Frequently Asked Questions</h1>
+      <button class="faq-btn" onclick="toggleAns(1)">Are all products handmade?</button>
+      <div id="ans1" class="faq-ans">Yes, every item in our shop is authentically handmade by skilled artisans.</div>
+      <button class="faq-btn" onclick="toggleAns(2)">How do I place an order?</button>
+      <div id="ans2" class="faq-ans">Simply visit our Home page and add products to your basket. Checkout via UPI or contact us for alternate payment modes!</div>
+      <button class="faq-btn" onclick="toggleAns(3)">Can I get custom handloom products?</button>
+      <div id="ans3" class="faq-ans">Yes! Reach out through our contact page and we'll work with you on custom designs.</div>
+      <button class="faq-btn" onclick="toggleAns(4)">Didn’t find your answer?</button>
+      <div id="ans4" class="faq-ans">No worries—visit our Contact page and send us your query!</div>
+    </section>
+  </section>
 
-// Initial display
-displayProducts(products);
-</script>
+  <script>
+    // SPA Page Navigation
+    function showPage(page) {
+      document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+      document.querySelector(`nav a[onclick*="${page}"]`).classList.add('active');
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(page).classList.add('active');
+      document.getElementById('mainTitle').innerText = (
+        page==='home' ? 'Handloom Fashion Shop':
+        page==='traditional' ? 'Go Traditional':
+        page==='contact' ? "We'd Love to Hear from You!":
+        page==='about' ? "About Us":
+        'Frequently Asked Questions'
+      );
+    }
+
+    // FAQ Accordion
+    function toggleAns(id) {
+      var ans = document.getElementById('ans'+id);
+      ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Basket & Shop Section Logic
+    const products = [
+      {id:1,name:"Handloom Saree",desc:"Beautiful handmade saree with natural colors.",price:2500,img:"https://via.placeholder.com/250x200?text=Saree"},
+      {id:2,name:"Handloom Kurta",desc:"Traditional kurta made with handloom cotton.",price:1500,img:"https://via.placeholder.com/250x200?text=Kurta"},
+      {id:3,name:"Handloom Handbag",desc:"Eco-friendly handbag crafted with handloom fabric.",price:800,img:"https://via.placeholder.com/250x200?text=Handbag"},
+      {id:4,name:"Handloom Dupatta",desc:"Elegant dupatta in handloom cotton.",price:600,img:"https://via.placeholder.com/250x200?text=Dupatta"},
+      {id:5,name:"Handloom Tablecloth",desc:"Beautiful handloom tablecloth for home decor.",price:1200,img:"https://via.placeholder.com/250x200?text=Tablecloth"},
+      {id:6,name:"Handloom Cushion Cover",desc:"Soft and colorful handloom cushion cover.",price:500,img:"https://via.placeholder.com/250x200?text=Cushion"}
+    ];
+    let basket = [];
+    function displayProducts(productsArray){
+      const container = document.getElementById('productsContainer');
+      let html = '';
+      if(productsArray.length === 0){
+        html = "<p style='grid-column:1/-1;text-align:center;color:#777;'>No products found.</p>";
+      } else {
+        productsArray.forEach(p=>{
+          html += `
+            <div class="product">
+              <img src="${p.img}" alt="${p.name}">
+              <h2>${p.name}</h2>
+              <p>${p.desc}</p>
+              <b>Price: ₹${p.price}</b><br>
+              <button onclick="addToBasket(${p.id})">Add to Basket</button>
+              <a href="upi://pay?pa=7601017851@ybl&pn=HandloomStore&am=${p.price}&cu=INR" class="btn">Pay ₹${p.price}</a>
+            </div>
+          `;
+        });
+      }
+      container.innerHTML = html;
+    }
+    function addToBasket(id){
+      const product = products.find(p=>p.id===id);
+      basket.push(product);
+      updateBasket();
+    }
+    function removeFromBasket(index){
+      basket.splice(index,1);
+      updateBasket();
+    }
+    function updateBasket(){
+      const basketDiv = document.getElementById('basketItems');
+      const totalDiv = document.getElementById('basketTotal');
+      basketDiv.innerHTML = '';
+      let total = 0;
+      basket.forEach((item,index)=>{
+        total += item.price;
+        basketDiv.innerHTML += `
+          <div class="basket-item">
+            <span>${item.name} - ₹${item.price}</span>
+            <button onclick="removeFromBasket(${index})">Remove</button>
+          </div>
+        `;
+      });
+      totalDiv.innerHTML = `<b>Total: ₹${total}</b>`;
+    }
+    function toggleBasket(){
+      document.getElementById('basketSidebar').classList.toggle('active');
+    }
+    function searchProduct(){
+      const keyword = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = products.filter(p=>p.name.toLowerCase().includes(keyword));
+      displayProducts(filtered);
+    }
+    displayProducts(products);
+
+    // Contact form
+    function contactSubmit(e){
+      e.preventDefault();
+      alert('Thank you for your feedback! We appreciate your input.');
+      document.querySelector('.feedback-form').reset();
+    }
+  </script>
+</body>
+</html>
 
 </body>
 </html>
